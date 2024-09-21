@@ -1,0 +1,43 @@
+name: Test and Save Artifacts
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+      - name: Install ChromeDriver and FirefoxDriver
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser
+          sudo apt-get install -y firefox
+          sudo apt-get install -y libxss1 libappindicator1 libindicator7
+          sudo apt-get install -y wget --no-install-recommends
+          wget https://github.com/mozilla/geckodriver/releases/download/v0.32.0/geckodriver-v0.32.0-linux64.tar.gz
+          tar -xvzf geckodriver-v0.32.0-linux64.tar.gz
+          rm geckodriver-v0.32.0-linux64.tar.gz
+          sudo mv geckodriver /usr/local/bin/
+          sudo chmod +x /usr/local/bin/geckodriver
+          export PATH=$PATH:/usr/local/bin/
+          wget https://chromedriver.storage.googleapis.com/108.0.5359.71/chromedriver_linux64.zip
+          unzip chromedriver_linux64.zip
+          sudo mv chromedriver /usr/local/bin/
+          sudo chmod +x /usr/local/bin/chromedriver
+
+      - name: Build with Maven
+        run: mvn clean package
+      - name: Upload Surefire email-able HTML file
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-report
+          path: target/surefire-reports/*.html
+

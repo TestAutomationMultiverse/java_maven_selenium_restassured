@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="testcases">
+    <test name="PetTest">
+        <classes>
+            <class name="Tests.api.PetTest"/>
+        </classes>
+    </test>
+    <test name="StoreTest">
+        <classes>
+            <class name="Tests.api.StoreTest"/>
+        </classes>
+    </test>
+    <test name="ChromeTest">
+        <parameter name="browser" value="chrome"/>
+        <parameter name="expectedColor" value="rgb(33, 136, 56)"></parameter>
+        <parameter name="headless" value="headless"></parameter>
+        <classes>
+            <class name="Tests.web.testingPlayground"/>
+        </classes>
+    </test>
+    <!-- <test name="FirefoxTest">
+        <parameter name="browser" value="firefox" />
+        <parameter name="expectedColor" value="rgb(33, 136, 56)"></parameter>
+        <parameter name="headless" value="headless"></parameter>
+        <classes>
+            <class name="Tests.web.testingPlayground"/>
+        </classes>
+    </test> -->
+</suite>

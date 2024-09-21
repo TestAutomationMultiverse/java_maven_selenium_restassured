@@ -1,1 +1,1 @@
-# java_maven_selenium_restassured
+# java_maven_restassured
